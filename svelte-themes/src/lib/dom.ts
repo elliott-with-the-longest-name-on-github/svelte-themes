@@ -29,7 +29,7 @@ export function script({
 		attributes.forEach((attr) => {
 			const isClass = attr === 'class';
 			const classes = isClass && domValues ? themes.map((t) => domValues[t] || t) : themes;
-			const domValue = domValues ? domValues[theme] : theme;
+			const domValue = domValues ? (domValues[theme] ?? theme) : theme;
 			if (isClass) {
 				el.classList.remove(...classes);
 				if (domValue) el.classList.add(domValue);

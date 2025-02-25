@@ -12,7 +12,7 @@
 </script>
 
 <div>
-	<h1>next-themes Example</h1>
+	<h1>svelte-themes Example</h1>
 	<select bind:value={theme.selectedTheme} data-test-id="theme-selector">
 		{#each options as { value, label } (value)}
 			<option {value}>{label}</option>

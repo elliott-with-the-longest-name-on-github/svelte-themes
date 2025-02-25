@@ -1,0 +1,4 @@
+@import 'tailwindcss';
+
+@custom-variant dark-slate (&:where([data-theme=dark-slate], [data-theme=dark-slate] *));
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

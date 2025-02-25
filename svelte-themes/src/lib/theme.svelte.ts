@@ -1,6 +1,6 @@
 import { tick } from 'svelte';
 import { MediaQuery } from 'svelte/reactivity';
-import { isServer } from './utils.js';
+import { isServer } from './utils.svelte.js';
 import type { ResolvedConfig } from './config.js';
 
 const colorSchemes = ['light', 'dark'];
@@ -19,7 +19,9 @@ export class Theme {
 		// This sets up the side effects necessary to sync the theme with the DOM
 		$effect(() => {
 			const domValues = this.#config.domValues;
-			const attributeDOMValue = domValues ? domValues[this.resolvedTheme] : this.resolvedTheme;
+			const attributeDOMValue = domValues
+				? (domValues[this.resolvedTheme] ?? this.resolvedTheme)
+				: this.resolvedTheme;
 			const reenableAnimation = this.#config.disableTransitionOnChange
 				? this.#disableAnimation()
 				: undefined;

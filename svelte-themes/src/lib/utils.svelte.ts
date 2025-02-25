@@ -1,4 +1,4 @@
-import { setContext, getContext, hasContext } from 'svelte';
+import { setContext, getContext, hasContext, onMount } from 'svelte';
 
 export function isServer(): boolean {
 	return typeof window === 'undefined';
@@ -26,4 +26,18 @@ export function createContext<T>(symbolName: string): {
 			return hasContext(symbol);
 		}
 	};
+}
+
+export class HydrationWatcher {
+	#hydrated = $state(false);
+
+	get hydrated() {
+		return this.#hydrated;
+	}
+
+	constructor() {
+		onMount(() => {
+			this.#hydrated = true;
+		});
+	}
 }
