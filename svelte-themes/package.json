@@ -1,6 +1,6 @@
 {
 	"name": "@sejohnson/svelte-themes",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Easy and performant themes for Svelte apps.",
 	"license": "MIT",
 	"repository": {
