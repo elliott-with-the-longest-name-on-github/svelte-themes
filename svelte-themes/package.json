@@ -1,7 +1,20 @@
 {
 	"name": "@sejohnson/svelte-themes",
+	"author": {
+		"name": "S. Elliott Johnson",
+		"email": "permanently.gruntled@gmail.com"
+	},
 	"version": "0.0.2",
 	"description": "Easy and performant themes for Svelte apps.",
+	"keywords": [
+		"svelte",
+		"theme",
+		"dark",
+		"light",
+		"system",
+		"dark mode",
+		"light mode"
+	],
 	"license": "MIT",
 	"repository": {
 		"directory": "./svelte-themes",

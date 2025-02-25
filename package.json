@@ -1,7 +1,6 @@
 {
 	"private": true,
 	"scripts": {
-		"prepublish": "pnpm -F svelte-themes build",
 		"test:e2e": "pnpm -r test:e2e",
 		"test:unit": "pnpm -r test:unit",
 		"format": "prettier --write .",
