@@ -1,34 +1,35 @@
 {
-  "private": true,
-  "scripts": {
-    "prepublish": "pnpm build --filter=svelte-themes",
-    "build": "pnpm build",
-    "start": "pnpm start",
-    "dev": "turbo dev",
-    "test:e2e": "turbo test:e2e",
-    "test:unit": "turbo test:unit",
-    "format": "prettier --write .",
-    "lint": "prettier --check . && eslint ."
-  },
-  "devDependencies": {
-    "@eslint/compat": "^1.2.5",
-    "@eslint/js": "^9.18.0",
-    "@types/node": "20.5.7",
-    "eslint": "^9.18.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-svelte": "^2.46.1",
-    "prettier": "^3.5.1",
-    "prettier-plugin-svelte": "^3.3.3",
-    "typescript": "^5.0.0",
-    "typescript-eslint": "^8.20.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/elliott-with-the-longest-name-on-github/svelte-themes.git"
-  },
-  "engines": {
-    "node": ">=20",
-    "pnpm": ">=9"
-  },
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+	"private": true,
+	"scripts": {
+		"prepublish": "pnpm -F svelte-themes build",
+		"test:e2e": "pnpm -r test:e2e",
+		"test:unit": "pnpm -r test:unit",
+		"format": "prettier --write .",
+		"check": "pnpm -r check",
+		"lint": "prettier --check . && eslint .",
+		"release": "pnpm -r build && changeset publish",
+		"version-packages": "changeset version && pnpm i --no-frozen-lockfile && git add ."
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.28.1",
+		"@eslint/compat": "^1.2.5",
+		"@eslint/js": "^9.18.0",
+		"eslint": "^9.18.0",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-svelte": "^2.46.1",
+		"prettier": "^3.5.1",
+		"prettier-plugin-svelte": "^3.3.3",
+		"typescript": "^5.0.0",
+		"typescript-eslint": "^8.20.0"
+	},
+	"repository": {
+		"directory": "./svelte-themes",
+		"type": "git",
+		"url": "https://github.com/elliott-with-the-longest-name-on-github/svelte-themes.git"
+	},
+	"engines": {
+		"node": ">=20",
+		"pnpm": ">=9"
+	},
+	"packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
