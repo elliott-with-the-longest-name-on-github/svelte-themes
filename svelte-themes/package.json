@@ -6,7 +6,7 @@
 	"repository": {
 		"directory": "./svelte-themes",
 		"type": "git",
-		"url": "https://github.com/elliott-with-the-longest-name-on-github/svelte-themes.git"
+		"url": "git+https://github.com/elliott-with-the-longest-name-on-github/svelte-themes.git"
 	},
 	"scripts": {
 		"dev": "vite dev",
