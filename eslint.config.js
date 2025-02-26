@@ -38,7 +38,7 @@ export default ts.config(
 				...globals.browser,
 				...globals.node
 			}
-		},
+		}
 	},
 	{
 		files: ['**/*.svelte'],
@@ -47,6 +47,6 @@ export default ts.config(
 			parserOptions: {
 				parser: ts.parser
 			}
-		},
+		}
 	}
 );
