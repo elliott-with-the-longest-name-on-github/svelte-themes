@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Lint
+    name: Run Linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,7 +16,7 @@ jobs:
         run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 20.x
           cache: 'pnpm'
 
       - run: pnpm install
@@ -26,7 +26,7 @@ jobs:
       - run: pnpm lint
 
   check:
-    name: Type Check
+    name: Run Type Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
         run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 20.x
           cache: 'pnpm'
 
       - run: pnpm install
