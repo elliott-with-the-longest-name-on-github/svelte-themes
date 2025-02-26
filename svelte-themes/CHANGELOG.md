@@ -1,5 +1,12 @@
 # @sejohnson/svelte-themes
 
+## 0.0.5
+
+### Patch Changes
+
+- 2464341: chore: Test release pipeline
+- 9b6ab5d: chore: Minor improvement to test release workflow
+
 ## 0.0.4
 
 ### Patch Changes
