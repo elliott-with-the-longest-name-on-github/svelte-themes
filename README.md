@@ -55,14 +55,14 @@ That's it, your SvelteKit app fully supports dark mode, including System prefere
 
 ```css
 :root {
-  /* Your default theme */
-  --background: white;
-  --foreground: black;
+	/* Your default theme */
+	--background: white;
+	--foreground: black;
 }
 
 [data-theme='dark'] {
-  --background: black;
-  --foreground: white;
+	--background: black;
+	--foreground: white;
 }
 ```
 
@@ -72,15 +72,15 @@ Your UI will need to know the current theme and be able to change it. The `getTh
 
 ```svelte
 <script lang="ts">
-  import { getTheme } from '@sejohnson/svelte-themes';
-  const theme = getTheme();
+	import { getTheme } from '@sejohnson/svelte-themes';
+	const theme = getTheme();
 </script>
 
 <div>
-  The current theme is: {theme.selectedTheme}
-  <button onclick={() => theme.selectedTheme = 'light'}>Light Mode</button>
-  <button onclick={() => theme.selectedTheme = 'dark'}>Dark Mode</button>
-  <button onclick={() => theme.selectedTheme = 'system'}>System</button>
+	The current theme is: {theme.selectedTheme}
+	<button onclick={() => (theme.selectedTheme = 'light')}>Light Mode</button>
+	<button onclick={() => (theme.selectedTheme = 'dark')}>Dark Mode</button>
+	<button onclick={() => (theme.selectedTheme = 'system')}>System</button>
 </div>
 ```
 
@@ -88,12 +88,14 @@ Your UI will need to know the current theme and be able to change it. The `getTh
 
 Just be sure to wrap your root component in `ThemeProvider`!
 
+<!-- prettier-ignore-start -->
 
 > [!WARNING]
 > The above code is hydration _unsafe_ and will throw a hydration mismatch warning when rendering with SSR. This is because we cannot know the `theme` on the server, so it will always be `undefined` until mounted on the client.
 >
 > You should delay rendering any theme toggling UI until mounted on the client. See the [example](#avoid-hydration-mismatch) for details.
 
+<!-- prettier-ignore -->
 ## API
 
 Let's dig into the details.
@@ -132,10 +134,9 @@ All your theme configuration is passed to ThemeProvider.
 - `themes`: The list of themes passed to `ThemeProvider`.
 
 > [!NOTE]
-> For `forcedTheme`, `defaultTheme`, and `selectedTheme`, be sure all values you plan on assigning are members of the `themes` array. 
+> For `forcedTheme`, `defaultTheme`, and `selectedTheme`, be sure all values you plan on assigning are members of the `themes` array.
 
-> [!WARNING]
-> `getTheme` relies on the [Context API](https://svelte.dev/docs/svelte/context), so you must call it during component initialization.
+> [!WARNING] > `getTheme` relies on the [Context API](https://svelte.dev/docs/svelte/context), so you must call it during component initialization.
 
 ## Examples
 
@@ -157,7 +158,7 @@ If you don't want a System theme, disable it via `enableSystem`:
 <ThemeProvider enableSystem={false}>
 ```
 
-This will automatically remove `system` from the default `themes` array. 
+This will automatically remove `system` from the default `themes` array.
 
 ### Class instead of data attribute
 
@@ -193,7 +194,6 @@ const theme = getTheme();
 const disabled = Boolean(theme.forcedTheme);
 ```
 
-
 ### Disable transitions on theme change
 
 Paco wrote about [this technique here](https://paco.sh/blog/disable-theme-transitions). We can forcefully disable all CSS transitions before the theme is changed, and re-enable them immediately afterwards. This ensures your UI with different transition durations won't feel inconsistent when changing the theme.
@@ -217,13 +217,13 @@ If we want the DOM to instead render `data-theme="my-pink-theme"` when the theme
 Done! To be extra clear, this affects only the DOM. Here's how all the values will look:
 
 ```js
-const theme = getTheme()
+const theme = getTheme();
 // theme.selectedTheme === "pink"
 
-localStorage.getItem('theme')
+localStorage.getItem('theme');
 // => "pink"
 
-document.documentElement.getAttribute('data-theme')
+document.documentElement.getAttribute('data-theme');
 // => "my-pink-theme"
 ```
 
@@ -259,14 +259,14 @@ This library does not rely on your theme styling using CSS variables. You can ha
 ```css
 html,
 body {
-  color: #000;
-  background: #fff;
+	color: #000;
+	background: #fff;
 }
 
 [data-theme='dark'],
 [data-theme='dark'] body {
-  color: #fff;
-  background: #000;
+	color: #fff;
+	background: #000;
 }
 ```
 
@@ -278,15 +278,15 @@ The following code sample is **unsafe**:
 
 ```svelte
 <script lang="ts">
-  import { getTheme } from '@sejohnson/svelte-themes'
-  const theme = getTheme();
+	import { getTheme } from '@sejohnson/svelte-themes';
+	const theme = getTheme();
 </script>
 
 <!-- Do NOT do this! It will cause a hydration mismatch! -->
 <select bind:value={theme.selectedTheme}>
-  <option value="system">System</option>
-  <option value="dark">Dark</option>
-  <option value="light">Light</option>
+	<option value="system">System</option>
+	<option value="dark">Dark</option>
+	<option value="light">Light</option>
 </select>
 ```
 
@@ -300,11 +300,11 @@ To fix this, make sure you only use JavaScript to render UI that uses the curren
 </script>
 
 {#if watcher.hydrated}
-  <select bind:value={theme.selectedTheme}>
-	  <option value="system">System</option>
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-  </select>
+	<select bind:value={theme.selectedTheme}>
+		<option value="system">System</option>
+		<option value="light">Light</option>
+		<option value="dark">Dark</option>
+	</select>
 {/if}
 ```
 
@@ -322,19 +322,19 @@ You can also use CSS to hide or show content based on the current theme. To avoi
 ```svelte
 <!-- When the theme is dark, hide this div -->
 <div data-hide-on-theme="dark">
-  <img src="light.png" width={400} height={400} />
+	<img src="light.png" width={400} height={400} />
 </div>
 
 <!-- When the theme is light, hide this div -->
 <div data-hide-on-theme="light">
-  <img src="dark.png" width={400} height={400} />
+	<img src="dark.png" width={400} height={400} />
 </div>
 ```
 
 ```css
 [data-theme='dark'] [data-hide-on-theme='dark'],
 [data-theme='light'] [data-hide-on-theme='light'] {
-  display: none;
+	display: none;
 }
 ```
 
@@ -350,7 +350,7 @@ Modern Tailwind uses `prefers-color-scheme` to switch between `light` and `dark`
 
 Done! `system`, `dark`, and `light` will all work as expected.
 
-If you need to support custom color schemes, you can define your own `@custom-variant` rules to match `data-theme=<whatever>`. 
+If you need to support custom color schemes, you can define your own `@custom-variant` rules to match `data-theme=<whatever>`.
 
 ## Discussion
 
