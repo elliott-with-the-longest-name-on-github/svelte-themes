@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Run Linter
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,10 +23,11 @@ jobs:
         env:
           CI: true
 
+      - run: pnpm -F @sejohnson/svelte-themes build
       - run: pnpm lint
 
   check:
-    name: Run Type Check
+    name: Type Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,4 +42,5 @@ jobs:
         env:
           CI: true
 
+      - run: pnpm -F @sejohnson/svelte-themes build
       - run: pnpm check
