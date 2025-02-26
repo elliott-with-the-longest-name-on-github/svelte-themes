@@ -1,5 +1,11 @@
 # @sejohnson/svelte-themes
 
+## 0.0.4
+
+### Patch Changes
+
+- feat: First ready version
+
 ## 0.0.3
 
 ### Patch Changes

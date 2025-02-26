@@ -4,7 +4,7 @@
 		"name": "S. Elliott Johnson",
 		"email": "permanently.gruntled@gmail.com"
 	},
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Easy and performant themes for Svelte apps.",
 	"keywords": [
 		"svelte",
@@ -79,10 +79,5 @@
 		"typescript-eslint": "^8.20.0",
 		"vite": "^6.0.0",
 		"vitest": "^3.0.0"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
 	}
 }
