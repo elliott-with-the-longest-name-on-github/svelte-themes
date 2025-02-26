@@ -139,7 +139,7 @@ All your theme configuration is passed to ThemeProvider.
 
 ## Examples
 
-The [Live Example](TODO) shows next-themes in action, with dark, light, system themes and pages with forced themes.
+The [Live Example](https://svelte-themes-multi-theme-example.vercel.app/) shows next-themes in action, with dark, light, system themes and pages with forced themes.
 
 ### Use System preference by default
 
@@ -340,7 +340,7 @@ You can also use CSS to hide or show content based on the current theme. To avoi
 
 ### With TailwindCSS (v4)
 
-[Visit the live example](TODO) • [View the example source code](https://github.com/elliott-with-the-longest-name-on-github/svelte-themes/tree/master/examples/tailwind)
+[Visit the live example](https://svelte-themes-tailwind-example.vercel.app/) • [View the example source code](https://github.com/elliott-with-the-longest-name-on-github/svelte-themes/tree/master/examples/tailwind)
 
 Modern Tailwind uses `prefers-color-scheme` to switch between `light` and `dark` modes. To support manual control over color scheme, override the default `dark` variant in your CSS config:
 
