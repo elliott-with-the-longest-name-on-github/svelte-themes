@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, type Snippet } from 'svelte';
+	import { type Snippet } from 'svelte';
 	import HeadScript from './head-script.svelte';
 	import { Theme } from './theme.svelte.js';
 	import type { Config } from './config.js';
-	import { hasTheme } from './index.js';
+	import { hasTheme, HydrationWatcher } from './index.js';
 	import { setTheme } from './context.js';
 	import { run } from 'svelte/legacy';
 
@@ -58,10 +58,7 @@
 		setTheme(theme);
 	}
 
-	let hydrated = $state(false);
-	onMount(() => {
-		hydrated = true;
-	});
+	const watcher = new HydrationWatcher();
 
 	run(() => {
 		if (enableSystem && !themes.includes('system')) {
@@ -87,7 +84,7 @@
 	});
 </script>
 
-{#if !hydrated}
+{#if !watcher.hydrated}
 	<HeadScript
 		{attribute}
 		{storageKey}
