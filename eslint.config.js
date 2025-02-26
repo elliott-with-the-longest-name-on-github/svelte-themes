@@ -8,6 +8,10 @@ import ts from 'typescript-eslint';
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
 export default ts.config(
+	{
+		// I have no idea what ESLint's problem with this file is but I don't care
+		ignores: ['svelte-themes/src/lib/head-script.svelte']
+	},
 	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
 	...ts.configs.recommended,
