@@ -4,7 +4,7 @@
 		"name": "S. Elliott Johnson",
 		"email": "permanently.gruntled@gmail.com"
 	},
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Easy and performant themes for Svelte apps.",
 	"keywords": [
 		"svelte",
