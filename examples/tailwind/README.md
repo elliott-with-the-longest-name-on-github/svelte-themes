@@ -11,4 +11,4 @@ so supporting your own manual toggles (for example, allowing the user to select 
 ```
 
 Setting the above will allow you to use `dark:` and `dark-slate:` variants throughout your app. Setting `system` through `ThemeProvider` will
-work automatically. 
+work automatically.
