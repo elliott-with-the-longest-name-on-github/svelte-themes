@@ -76,12 +76,12 @@ export class Theme {
 		return this.#config.forcedTheme;
 	}
 
-	/** The user-selected theme. Does not respect {@link forcedTheme} or {@link defaultTheme}. */
+	/** The user-selected theme. Does not respect {@link forcedTheme}. */
 	get selectedTheme(): string | undefined {
-		return this.#selectedTheme;
+		return this.#selectedTheme ?? this.defaultTheme;
 	}
 
-	/** The user-selected theme. Does not respect {@link forcedTheme} or {@link defaultTheme}. */
+	/** The user-selected theme. Does not respect {@link forcedTheme}. */
 	set selectedTheme(v: string) {
 		if (!this.#config.enableSystem && v === 'system') {
 			throw new Error(
@@ -115,15 +115,18 @@ export class Theme {
 	 * `resolvedTheme` will never be "system", as "system" will always resolve to "dark" or "light".
 	 */
 	readonly resolvedTheme = $derived.by(() => {
-		let theme = this.forcedTheme ?? this.selectedTheme ?? this.defaultTheme;
+		let theme = this.forcedTheme ?? this.selectedTheme ?? this.#resolvedDefaultTheme;
 		if (theme === 'system') {
-			theme = this.systemTheme ?? this.defaultTheme;
+			theme = this.systemTheme ?? this.#resolvedDefaultTheme;
 		}
-		return theme ?? this.defaultTheme;
+		return theme ?? this.#resolvedDefaultTheme;
 	});
 
-	/** The default theme name */
-	readonly defaultTheme = $derived.by(() => {
+	/** The default theme name. Does not resolve `'system'` to its underlying value. */
+	readonly defaultTheme = $derived.by(() => this.#config.defaultTheme);
+
+	/** The default theme, fully resolved to its underlying value. */
+	#resolvedDefaultTheme = $derived.by(() => {
 		if (this.#config.defaultTheme === 'system') {
 			// This complicated fallback basically says "if we can't find the system theme, get the first non-system theme in the list, and if there's not one of those, go with light"
 			return this.systemTheme ?? this.#config.themes.filter((t) => t !== 'system')[0] ?? 'light';

@@ -56,7 +56,7 @@ describe('inline script', () => {
 		});
 		expect(body).toContain(
 			themeDump({
-				theme: '',
+				theme: 'system',
 				systemTheme: '',
 				resolvedTheme: 'dark',
 				forcedTheme: 'dark'

@@ -95,7 +95,7 @@ describe('defaultTheme', () => {
 		const cleanup = $effect.root(() => {
 			setDeviceTheme('light');
 			const t = new Theme(config());
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('system');
 			expect(t.systemTheme).toBe('light');
 			expect(t.resolvedTheme).toBe('light');
 		});
@@ -105,7 +105,7 @@ describe('defaultTheme', () => {
 	test('should return light when no default-theme is set and enableSystem=false', () => {
 		const cleanup = $effect.root(() => {
 			const t = new Theme(config({ enableSystem: false }));
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('light');
 			expect(t.resolvedTheme).toBe('light');
 		});
 		cleanup();
@@ -114,7 +114,7 @@ describe('defaultTheme', () => {
 	test('should return light when light is set as default-theme', () => {
 		const cleanup = $effect.root(() => {
 			const t = new Theme(config({ defaultTheme: 'light' }));
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('light');
 			expect(t.resolvedTheme).toBe('light');
 		});
 		cleanup();
@@ -123,7 +123,7 @@ describe('defaultTheme', () => {
 	test('should return dark when dark is set as default-theme', () => {
 		const cleanup = $effect.root(() => {
 			const t = new Theme(config({ defaultTheme: 'dark' }));
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('dark');
 			expect(t.resolvedTheme).toBe('dark');
 		});
 		cleanup();
@@ -133,12 +133,12 @@ describe('defaultTheme', () => {
 		const cleanup = $effect.root(() => {
 			const c = config({ defaultTheme: 'dark' });
 			const t = new Theme(c);
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('dark');
 			expect(t.resolvedTheme).toBe('dark');
 
 			// @ts-expect-error -- yeah yeah, I'm just emulating a prop change
 			c.defaultTheme = 'light';
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('light');
 			expect(t.resolvedTheme).toBe('light');
 		});
 		cleanup();
@@ -149,7 +149,7 @@ describe('provider', () => {
 	it('ignores nested ThemeProviders', () => {
 		const { getByTestId } = render(NestedProviders);
 
-		expect(getByTestId('theme').textContent).toBe('');
+		expect(getByTestId('theme').textContent).toBe('dark');
 		expect(getByTestId('resolvedTheme').textContent).toBe('dark');
 	});
 });
@@ -235,15 +235,15 @@ describe('custom value-mapping', () => {
 	test('should allow missing values (attribute)', () => {
 		localStorageMock.setItem('theme', 'light');
 		render(TestProvider, { domValues: { dark: 'dark-mode' } });
-		expect(document.documentElement.hasAttribute('data-theme')).toBe(false);
+		expect(document.documentElement.hasAttribute('data-theme')).toBe(true);
 	});
 
-	test('should allow missing values (class)', () => {
+	test('should not allow missing values (class)', () => {
 		render(TestProvider, {
 			attribute: 'class',
 			domValues: { dark: 'dark-mode' }
 		});
-		expect(document.documentElement.classList.contains('light')).toBe(false);
+		expect(document.documentElement.classList.contains('light')).toBe(true);
 	});
 
 	test('supports multiple attributes', () => {
@@ -276,7 +276,7 @@ describe('forcedTheme', () => {
 		setDeviceTheme('dark');
 
 		const { getByTestId } = render(TestProvider, { forcedTheme: 'light' });
-		expect(getByTestId('theme').textContent).toBe('');
+		expect(getByTestId('theme').textContent).toBe('system');
 		expect(getByTestId('systemTheme').textContent).toBe('dark');
 		expect(getByTestId('resolvedTheme').textContent).toBe('light');
 		expect(getByTestId('forcedTheme').textContent).toBe('light');
@@ -286,13 +286,13 @@ describe('forcedTheme', () => {
 		setDeviceTheme('dark');
 
 		const { getByTestId, rerender } = render(TestProvider, { forcedTheme: 'light' });
-		expect(getByTestId('theme').textContent).toBe('');
+		expect(getByTestId('theme').textContent).toBe('system');
 		expect(getByTestId('systemTheme').textContent).toBe('dark');
 		expect(getByTestId('resolvedTheme').textContent).toBe('light');
 		expect(getByTestId('forcedTheme').textContent).toBe('light');
 
 		await rerender({ forcedTheme: 'system' });
-		expect(getByTestId('theme').textContent).toBe('');
+		expect(getByTestId('theme').textContent).toBe('system');
 		expect(getByTestId('systemTheme').textContent).toBe('dark');
 		expect(getByTestId('resolvedTheme').textContent).toBe('dark');
 		expect(getByTestId('forcedTheme').textContent).toBe('system');
@@ -304,7 +304,7 @@ describe('system theme', () => {
 		setDeviceTheme('dark');
 		const cleanup = $effect.root(() => {
 			const t = new Theme(config());
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('system');
 			expect(t.systemTheme).toBe('dark');
 			expect(t.resolvedTheme).toBe('dark');
 		});
@@ -316,7 +316,7 @@ describe('system theme', () => {
 
 		const cleanup = $effect.root(() => {
 			const t = new Theme(config({ defaultTheme: 'light' }));
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('light');
 			expect(t.systemTheme).toBe('dark');
 			expect(t.resolvedTheme).toBe('light');
 		});
@@ -328,7 +328,7 @@ describe('system theme', () => {
 
 		const cleanup = $effect.root(() => {
 			const t = new Theme(config({ defaultTheme: 'light', enableSystem: false }));
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('light');
 			expect(t.systemTheme).toBeUndefined();
 			expect(t.resolvedTheme).toBe('light');
 		});
@@ -360,7 +360,7 @@ describe('updating theme', () => {
 	test('<literal>', () => {
 		$effect.root(() => {
 			const t = new Theme(config());
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('system');
 			expect(t.resolvedTheme).toBe('light');
 			t.selectedTheme = 'dark';
 			expect(t.selectedTheme).toBe('dark');
@@ -371,7 +371,7 @@ describe('updating theme', () => {
 	test('based on current theme', () => {
 		$effect.root(() => {
 			const t = new Theme(config({ defaultTheme: 'light' }));
-			expect(t.selectedTheme).toBeUndefined();
+			expect(t.selectedTheme).toBe('light');
 			expect(t.resolvedTheme).toBe('light');
 			t.selectedTheme = t.resolvedTheme === 'light' ? 'dark' : 'light';
 			expect(t.selectedTheme).toBe('dark');
