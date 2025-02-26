@@ -12,19 +12,19 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+      - name: Enable corepack
+        run: corepack enable
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.node-version'
+          node-version: 22.x
           cache: 'pnpm'
 
-      - name: Install Dependencies
-        run: pnpm install
+      - run: pnpm install
+        env:
+          CI: true
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
